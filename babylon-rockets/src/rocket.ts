@@ -14,6 +14,14 @@ export class Rocket {
     var rocketEngine = BABYLON.MeshBuilder.CreateBox("rocketEngine", {height: 0.1, width: 0.1, depth: 0.1}, scene);
     rocketEngine.position = new BABYLON.Vector3(xPos, yPos, zPos);
 
+    //Create box to help with clicking
+    let clickBox = BABYLON.MeshBuilder.CreateBox("clickBox", {height:20, width: 20, depth: 10}, scene)
+    clickBox.position = new BABYLON.Vector3(xPos +10, yPos +10, zPos+5);
+    let invisibeMaterial = new BABYLON.StandardMaterial("invisibleMaterial", scene);
+    invisibeMaterial.alpha = 0;
+    clickBox.material = invisibeMaterial
+
+
     // Add Particles to lines
     const particleEmitter = ModelUtils.createParticles('particles', rocketEngine, scene);
 
@@ -39,7 +47,7 @@ export class Rocket {
     };
 
     //Set up Action on trigger
-    ActionUtil.onSingleClick(lines, beginAnimation, scene )
+    ActionUtil.onSingleClick(clickBox, beginAnimation, scene )
     return animationGroup
 
   }
